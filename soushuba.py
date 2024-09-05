@@ -151,7 +151,7 @@ class SouShuBaClient:
 
 if __name__ == '__main__':
     try:
-        redirect_url = get_refresh_url('http://' + os.environ.get('kuw.8.ascas454as5d.com', 'kuw.8.ascas454as5d.com'))
+        redirect_url = get_refresh_url('http://' + os.environ.get('kuw.8.ascas454as5d.com', 'www.soushu2025.com'))
         time.sleep(2)
         redirect_url2 = get_refresh_url(redirect_url)
         url = get_url(redirect_url2)
