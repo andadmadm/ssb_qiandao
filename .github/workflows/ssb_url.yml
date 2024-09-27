@@ -2,9 +2,10 @@ name: Upload SSB URL
 
 on:
   push:
-    branches:
-      - main  # 可以根据需要修改触发条件
-  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * *'
 
 jobs:
   build:
