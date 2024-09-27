@@ -88,14 +88,20 @@ if __name__ == '__main__':
         redirect_url = get_refresh_url('http://' + os.environ.get('kvasd.dpkd.5asfws6fpm.com', 'www.soushu2025.com'))
         time.sleep(2)
         redirect_url2 = get_refresh_url(redirect_url)
-        url = get_url(redirect_url2)
-        domain = urlparse(url).hostname
-        # 将域名写入 ssb_url.txt
+        final_url = get_url(redirect_url2)  # 完整的 URL
+
+        # 将完整的 URL 写入 ssb_url.txt
         with open('ssb_url.txt', 'w', encoding='utf-8') as file:
-            file.write(domain + '\n')  # 只写入域名而不是完整 URL
+            file.write(final_url + '\n')  # 写入完整的 URL
+        
+        # 将格式化后的域名写入 ssb_clash.txt
+        domain = urlparse(final_url).hostname
         with open('ssb_clash.txt', 'w', encoding='utf-8') as clash_file:
-            clash_file.write(f"DOMAIN-SUFFIX,{domain}\n")  # 写入格式化的内容
-        logger.info(f'{url}')
-       update_clini_file(url)
+            clash_file.write(f"DOMAIN-SUFFIX,{domain}\n")
+        
+        logger.info(f'{final_url}')
+        
+        # 更新 cl.ini 文件中的自定义代理组 URL
+        update_clini_file(final_url)  # 使用 final_url 替换 url
     
         sys.exit(0)
