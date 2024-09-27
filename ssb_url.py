@@ -69,14 +69,6 @@ if __name__ == '__main__':
             clash_file.write(f"DOMAIN-SUFFIX,{domain}\n")  # 写入格式化的内容
         logger.info(f'{url}')
 
-        editor = ConfigFileEditor('cl.ini')
-    
-    # 修改 URL
-        editor.modify_url_test('url')  # 将URL部分替换为 'url'
-    
-    # 保存修改后的文件
-        editor.save_changes()
-        print('cl.ini 文件已成功修改')
     
         sys.exit(0)
         client = SouShuBaClient(urlparse(url).hostname,
