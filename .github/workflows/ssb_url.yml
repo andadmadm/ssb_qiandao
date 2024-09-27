@@ -1,0 +1,35 @@
+name: Get Redirect URL
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      SOUSHUBA_HOSTNAME: ${{ secrets.SOUSHUBA_HOSTNAME }}
+      SOUSHUBA_USERNAME: ${{ secrets.SOUSHUBA_USERNAME }}
+      SOUSHUBA_PASSWORD: ${{ secrets.SOUSHUBA_PASSWORD }}
+      INITIAL_URL: ${{ secrets.INITIAL_URL }}  # 可选，如果你想使用环境变量
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          
+      - run: pip install -r requirements.txt
+      
+      - run: python ssb_url.py  # 运行你的 Python 脚本
+      
+      - name: Upload ssb_url.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: ssb_url
+          path: ssb_url.txt
