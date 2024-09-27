@@ -148,6 +148,33 @@ class SouShuBaClient:
             else:
                 logger.warning(f'{self.username} post {x + 1}nd failed!')
 
+class ConfigFileEditor:
+    def __init__(self, file_path):
+        """初始化类并设置文件路径"""
+        self.file_path = file_path
+        self.content = self._read_file()
+
+    def _read_file(self):
+        """读取文件内容"""
+        with open(self.file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+
+    def _write_file(self):
+        """将修改后的内容写回文件"""
+        with open(self.file_path, 'w', encoding='utf-8') as file:
+            file.write(self.content)
+
+    def modify_url_test(self, new_url):
+        """修改自定义的 url-test 行中的 URL"""
+        # 使用正则表达式匹配并替换需要的部分
+        pattern = r'(自定义`url-test`\.\*\`\`)300,,50'  # 匹配自定义`url-test`.*``300,,50
+        replacement = rf'\1{new_url}300,,50'
+        self.content = re.sub(pattern, replacement, self.content)
+
+    def save_changes(self):
+        """保存对文件的所有修改"""
+        self._write_file()
+        
 
 if __name__ == '__main__':
     try:
@@ -162,6 +189,16 @@ if __name__ == '__main__':
         with open('ssb_clash.txt', 'w', encoding='utf-8') as clash_file:
             clash_file.write(f"DOMAIN-SUFFIX,domain\n")  # 写入格式化的内容
         logger.info(f'{url}')
+
+        editor = ConfigFileEditor('cl.ini')
+    
+    # 修改 URL
+        editor.modify_url_test('url')  # 将URL部分替换为 'url'
+    
+    # 保存修改后的文件
+        editor.save_changes()
+        print('cl.ini 文件已成功修改')
+    
         sys.exit(0)
         client = SouShuBaClient(urlparse(url).hostname,
                                 os.environ.get('SOUSHUBA_USERNAME', "libesse"),
