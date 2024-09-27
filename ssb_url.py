@@ -158,6 +158,7 @@ if __name__ == '__main__':
         with open('ssb_url.txt', 'w', encoding='utf-8') as file:
             file.write(url + '\n')
         logger.info(f'{url}')
+        sys.exit(0)
         client = SouShuBaClient(urlparse(url).hostname,
                                 os.environ.get('SOUSHUBA_USERNAME', "libesse"),
                                 os.environ.get('SOUSHUBA_PASSWORD', "yF9pnSBLH3wpnLd"))
