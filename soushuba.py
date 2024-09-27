@@ -165,5 +165,3 @@ if __name__ == '__main__':
             f.write('payload:\n')
             f.write(f'  - "+.{ssb_url_domain}"\n')
 
-        
-        sys.exit(1)
