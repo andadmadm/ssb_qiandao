@@ -156,12 +156,13 @@ if __name__ == '__main__':
         redirect_url2 = get_refresh_url(redirect_url)
         url = get_url(redirect_url2)
         logger.info(f'{url}')
-        
-        parsed_url = urlparse(url)
-        ssb_url_domain = parsed_url.hostname
-        
-        # 将 ssb-url 的域名部分写入 ssb.txt，并格式化 payload
-        with open('ssb.txt', 'w', encoding='utf-8') as f:
-            f.write('payload:\n')
-            f.write(f'  - "+.{ssb_url_domain}"\n')
-
+        client = SouShuBaClient(urlparse(url).hostname,
+                                os.environ.get('SOUSHUBA_USERNAME', "libesse"),
+                                os.environ.get('SOUSHUBA_PASSWORD', "yF9pnSBLH3wpnLd"))
+        client.login()
+        client.space()
+        credit = client.credit()
+        logger.info(f'{client.username} have {credit} coins!')
+    except Exception as e:
+        logger.error(e)
+        sys.exit(1)
