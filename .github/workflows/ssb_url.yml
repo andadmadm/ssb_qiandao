@@ -33,6 +33,10 @@ jobs:
           git config --local user.name "andadmadm"
           git config --local user.email "andadmadm@yandex.com"
 
+      - name:Print ssb_url.txt content
+        run: |
+          cat ssb_url.txt
+
       - name: Commit and push ssb_url.txt
         run: |
           git add ssb_url.txt
