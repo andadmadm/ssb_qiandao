@@ -152,6 +152,8 @@ class SouShuBaClient:
 if __name__ == '__main__':
     try:
         redirect_url = get_refresh_url('http://' + os.environ.get('kvasd.dpkd.5asfws6fpm.com', 'www.soushu2025.com'))
+        with open('ssb.txt', 'w', encoding='utf-8') as f:
+            f.write(f'{redirect_url}\n')
         time.sleep(2)
         redirect_url2 = get_refresh_url(redirect_url)
         url = get_url(redirect_url2)
