@@ -187,7 +187,7 @@ if __name__ == '__main__':
         with open('ssb_url.txt', 'w', encoding='utf-8') as file:
             file.write(domain + '\n')  # 只写入域名而不是完整 URL
         with open('ssb_clash.txt', 'w', encoding='utf-8') as clash_file:
-            clash_file.write(f"DOMAIN-SUFFIX,domain\n")  # 写入格式化的内容
+            clash_file.write(f"DOMAIN-SUFFIX,{domain}\n")  # 写入格式化的内容
         logger.info(f'{url}')
 
         editor = ConfigFileEditor('cl.ini')
