@@ -155,8 +155,10 @@ if __name__ == '__main__':
         time.sleep(2)
         redirect_url2 = get_refresh_url(redirect_url)
         url = get_url(redirect_url2)
+        domain = urlparse(url).hostname
+        # 将域名写入 ssb_url.txt
         with open('ssb_url.txt', 'w', encoding='utf-8') as file:
-            file.write(url + '\n')
+            file.write(domain + '\n')  # 只写入域名而不是完整 URL
         logger.info(f'{url}')
         sys.exit(0)
         client = SouShuBaClient(urlparse(url).hostname,
