@@ -27,6 +27,29 @@ jobs:
       - name: Run script
         run: |
           python ssb_url.py  # 替换为你的 Python 脚本名称
+          echo "Script executed successfully."
+
+      - name: Print ssb_url.txt content
+        run: |
+          if [ -f ssb_url.txt ]; then
+            cat ssb_url.txt
+          else
+            echo "ssb_url.txt does not exist."
+            exit 1
+          fi
+
+      - name: Check git status
+        run: |
+          git status
+
+      - name: Check if ssb_url.txt has content
+        run: |
+          if [ -s ssb_url.txt ]; then
+            echo "ssb_url.txt exists and has content."
+          else
+            echo "ssb_url.txt is empty or does not exist."
+            exit 1
+          fi
 
       - name: Configure Git
         run: |
@@ -35,11 +58,9 @@ jobs:
 
       - name: Commit and push ssb_url.txt
         run: |
-          cat ssb_url.txt
-          git add ssb_url.txt
-          git commit -m "Add ssb_url.txt with the latest URL"
+          git add -A  # 强制添加所有更改
+          git commit -m "Add ssb_url.txt with the latest URL" || echo "Nothing to commit"
           git push
           
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}  # 使用 GitHub 提供的 token
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
