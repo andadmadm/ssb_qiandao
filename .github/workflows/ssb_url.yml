@@ -1,35 +1,34 @@
-name: Get Redirect URL
+name: Upload SSB URL
+
 on:
   push:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 21 * * *'
+    branches:
+      - main  # 可以根据需要修改触发条件
+  pull_request:
 
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
-    env:
-      SOUSHUBA_HOSTNAME: ${{ secrets.SOUSHUBA_HOSTNAME }}
-      SOUSHUBA_USERNAME: ${{ secrets.SOUSHUBA_USERNAME }}
-      SOUSHUBA_PASSWORD: ${{ secrets.SOUSHUBA_PASSWORD }}
-      INITIAL_URL: ${{ secrets.INITIAL_URL }}  # 可选，如果你想使用环境变量
 
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-        
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.11'
-          cache: 'pip'
-          
-      - run: pip install -r requirements.txt
-      
-      - run: python ssb_url.py  # 运行你的 Python 脚本
-      
+          python-version: '3.8'  # 根据需要修改 Python 版本
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # 如果有依赖库，可以指定
+
+      - name: Run script
+        run: |
+          python ssb_url.py  # 替换为你的 Python 脚本名称
+
       - name: Upload ssb_url.txt
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
-          name: ssb_url
-          path: ssb_url.txt
+          name: ssb-url
+          path: ssb_url.txt  # 指定要上传的文件
