@@ -26,7 +26,7 @@ jobs:
 
       - name: Run script
         run: |
-          python your_script.py  # 替换为你的 Python 脚本名称
+          python ssb_url.py  # 替换为你的 Python 脚本名称
 
       - name: Upload ssb_url.txt
         uses: actions/upload-artifact@v3  # 更新为 v3
