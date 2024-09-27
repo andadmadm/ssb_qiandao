@@ -33,12 +33,9 @@ jobs:
           git config --local user.name "andadmadm"
           git config --local user.email "andadmadm@yandex.com"
 
-      - name:Print ssb_url.txt content
-        run: |
-          cat ssb_url.txt
-
       - name: Commit and push ssb_url.txt
         run: |
+          cat ssb_url.txt
           git add ssb_url.txt
           git commit -m "Add ssb_url.txt with the latest URL"
           git push
