@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # 更新为 v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4  # 更新为 v4
         with:
           python-version: '3.8'  # 根据需要修改 Python 版本
 
@@ -26,10 +26,10 @@ jobs:
 
       - name: Run script
         run: |
-          python ssb_url.py  # 替换为你的 Python 脚本名称
+          python your_script.py  # 替换为你的 Python 脚本名称
 
       - name: Upload ssb_url.txt
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # 更新为 v3
         with:
           name: ssb-url
           path: ssb_url.txt  # 指定要上传的文件
