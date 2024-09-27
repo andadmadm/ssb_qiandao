@@ -33,3 +33,16 @@ jobs:
         with:
           name: ssb-url
           path: ssb_url.txt  # 指定要上传的文件
+
+      - name: List files in the working directory
+        run: |
+          ls -la  # 列出当前目录中的所有文件
+
+      - name: Check if ssb_url.txt exists
+        run: |
+          if [ -f ssb_url.txt ]; then
+            echo "ssb_url.txt exists."
+          else
+            echo "ssb_url.txt does not exist."
+          fi
+
