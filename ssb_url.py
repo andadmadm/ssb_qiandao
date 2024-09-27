@@ -54,7 +54,35 @@ def get_url(url: str):
         if link.text == "搜书吧":
             return link['href']
     return None
+    
+def update_clini_file(url: str):
+    """
+    该函数读取 `cl.ini` 文件，查找 custom_proxy_group=🌍 自定义 行，
+    并用新的 URL 格式替换。
+    """
+    cl_ini_path = 'cl.ini'  # 根据需要调整路径
+
+    try:
+        # 读取 cl.ini 文件内容
+        with open(cl_ini_path, 'r', encoding='utf-8') as file:
+            cl_ini_content = file.read()
+
+        # 查找并替换 custom_proxy_group 行，只修改这一行的内容
+        proxy_group_pattern = r'(custom_proxy_group=🌍 自定义).*'
+        new_proxy_group = f'custom_proxy_group=🌍 自定义`url-test`.*`{url}`300,,50'
+        updated_content = re.sub(proxy_group_pattern, new_proxy_group, cl_ini_content)
+
+        # 将更新后的内容写回 cl.ini
+        with open(cl_ini_path, 'w', encoding='utf-8') as file:
+            file.write(updated_content)
         
+        logger.info(f"成功将 cl.ini 中的自定义代理组更新为: {new_proxy_group}")
+
+    except FileNotFoundError:
+        logger.error(f"未找到文件 {cl_ini_path}。")
+    except Exception as e:
+        logger.error(f"更新 cl.ini 时发生错误: {e}")
+
 if __name__ == '__main__':
     try:
         redirect_url = get_refresh_url('http://' + os.environ.get('kvasd.dpkd.5asfws6fpm.com', 'www.soushu2025.com'))
@@ -68,6 +96,6 @@ if __name__ == '__main__':
         with open('ssb_clash.txt', 'w', encoding='utf-8') as clash_file:
             clash_file.write(f"DOMAIN-SUFFIX,{domain}\n")  # 写入格式化的内容
         logger.info(f'{url}')
-
+       update_clini_file(url)
     
         sys.exit(0)
