@@ -28,21 +28,17 @@ jobs:
         run: |
           python ssb_url.py  # 替换为你的 Python 脚本名称
 
-      - name: Upload ssb_url.txt
-        uses: actions/upload-artifact@v3  # 更新为 v3
-        with:
-          name: ssb-url
-          path: ssb_url.txt  # 指定要上传的文件
-
-      - name: List files in the working directory
+      - name: Configure Git
         run: |
-          ls -la  # 列出当前目录中的所有文件
+          git config --local user.name "andadmadm"
+          git config --local user.email "andadmadm@yandex.com"
 
-      - name: Check if ssb_url.txt exists
+      - name: Commit and push ssb_url.txt
         run: |
-          if [ -f ssb_url.txt ]; then
-            echo "ssb_url.txt exists."
-          else
-            echo "ssb_url.txt does not exist."
-          fi
+          git add ssb_url.txt
+          git commit -m "Add ssb_url.txt with the latest URL"
+          git push
+          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 提供的 token
 
