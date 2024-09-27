@@ -85,6 +85,7 @@ def update_clini_file(url: str):
 
 if __name__ == '__main__':
     try:
+        # 获取重定向后的 URL
         redirect_url = get_refresh_url('http://' + os.environ.get('kvasd.dpkd.5asfws6fpm.com', 'www.soushu2025.com'))
         time.sleep(2)
         redirect_url2 = get_refresh_url(redirect_url)
@@ -103,5 +104,9 @@ if __name__ == '__main__':
         
         # 更新 cl.ini 文件中的自定义代理组 URL
         update_clini_file(final_url)  # 使用 final_url 替换 url
-    
+
         sys.exit(0)
+        
+    except Exception as e:
+        logger.error(f"发生意外错误: {e}")
+        sys.exit(1)
