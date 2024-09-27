@@ -1,2 +1,1 @@
-payload:
-  - '+.vsdf.n.rkggs5f4e5asf.com'
+DOMAIN-SUFFIX,domain'
