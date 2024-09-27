@@ -24,3 +24,10 @@ jobs:
           cache: 'pip'
       - run: pip install -r requirements.txt
       - run: python soushuba.py
+
+      # 将 ssb.txt 文件保存为工件
+      - name: Upload ssb.txt as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ssb-url
+          path: ssb.txt
