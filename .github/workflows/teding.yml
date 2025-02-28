@@ -1,6 +1,7 @@
 name: Daily Browser Simulation
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '1 4 * * *'  # UTC时间0点触发（北京时间8点）
 
