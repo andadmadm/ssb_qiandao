@@ -1,0 +1,37 @@
+name: Daily Browser Simulation
+
+on:
+  schedule:
+    - cron: '1 4 * * *'  # UTC时间0点触发（北京时间8点）
+
+jobs:
+  access-task:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set random delay
+      run: |
+        # 生成0-6小时随机延迟（21600秒）
+        DELAY=$(shuf -i 0-21600 -n 1)
+        echo "⏳ 随机延迟 $DELAY 秒"
+        sleep $DELAY
+
+    - name: Simulate browser access
+      env:
+        TARGET_URL: ${{ secrets.TEDING }}
+      run: |
+        # 随机生成浏览器特征
+        USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/$(shuf -i 90-124 -n 1).0.0.0 Safari/537.36"
+        ACCEPT_LANGUAGE="zh-CN,zh;q=0.9,en;q=0.8"
+        REFERER="https://www.google.com/"
+        COOKIE="session_id=$(openssl rand -hex 16)"
+
+        # 执行带浏览器特征的请求
+        curl -sS -L -A "$USER_AGENT" \
+          -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
+          -H "Accept-Language: $ACCEPT_LANGUAGE" \
+          -H "Referer: $REFERER" \
+          -H "Cookie: $COOKIE" \
+          --compressed \
+          $TARGET_URL
+
+        echo -e "\n✅ 浏览器模拟访问完成"
